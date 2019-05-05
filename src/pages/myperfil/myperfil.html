@@ -1,0 +1,126 @@
+<!--
+  Generated template for the MyperfilPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header id="head"> 
+    <ion-grid>
+        <ion-row align-items-center>
+            <ion-col col-2 text-left>
+                <ion-navbar></ion-navbar>
+            </ion-col>
+            <ion-col class="div_img" col-8>
+                <img src="../../assets/imgs/logolargoblanco.png" alt="">
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-header>
+<ion-content id="bod">
+    <div no-padding>
+        <ion-grid no-padding id="grid2">
+            <ion-row no-padding align-items-center>
+                <ion-col col-3 id="pad-5">
+                    <p>Nice job</p>
+                </ion-col>
+                <ion-col class="div_img" col-6>
+                    <p>This is a 468x60 test ad.</p>
+                </ion-col>
+                <ion-col class="div_img" col-3>
+                    <img src="../../assets/imgs/tab2@3x.png" class="img_icon">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <ion-grid no-padding id="grid_title">
+        <ion-row no-padding align-items-center>
+            <ion-col col-2></ion-col>
+            <ion-col col-2 text-right>
+                <img src="../../assets/imgs/miperfil.png" alt="" id="img_title">
+            </ion-col>
+            <ion-col col-8 text-left id="text_title">
+                Mi perfil
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div>
+    	<ion-grid padding>
+    		<ion-row>
+    			<ion-col col-12 text-center>
+    				<img src="../assets/imgs/avatar9.png" alt="" width="120">
+    			</ion-col>
+    			<ion-col col-12>
+    				<form (ngSubmit)="editPersonalDates()" id="f_e_p_d">
+				        <div class="space"></div>
+				      	<ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/usuariogris.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="name" placeholder="Mi nombre" value="{{ userDetails.name }}"></ion-input>
+				      	</ion-item>
+				      	<div class="space"></div>
+				      	<ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/usuariogris.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="nick" placeholder="Mi nick" value="{{ userDetails.nick }}"></ion-input>
+				      	</ion-item>
+				      	<div class="space"></div>
+				      	<ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/email.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="email" placeholder="Mi email" readonly value="{{ userDetails.email }}"></ion-input>
+				      	</ion-item>
+                        <div class="space_2"></div>
+                        <span><b>*Nota:</b> El email ingresado en el registro no se puede cambiar, para este proceso pongase en contacto con nuestro soporte</span>
+				        <div class="space"></div>
+				        <hr>
+				        <!-- <p>
+				        	Rellene los siguientes campos si desea cambiar su contraseña de acceso.
+				        </p>
+				        <ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/candado.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="password" placeholder="Contraseña actual"></ion-input>
+				      	</ion-item>
+				        <div class="space"></div>
+				        <ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/candado.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="new_password" placeholder="Nueva contraseña"></ion-input>
+				      	</ion-item>
+				        <div class="space"></div>
+				        <ion-item class="item_form">
+				        	<ion-label class="label_form">
+				        		<img src="../../assets/imgs/candado.png" alt="">
+				        	</ion-label>
+				        	<ion-input type="text" name="confirm_new_password" placeholder="Confirma la nueva contraseña"></ion-input>
+				      	</ion-item> -->
+				        <div class="space"></div>
+				        <ion-input type="hidden" name="user_id" value="{{ userDetails.id }}"></ion-input>
+				        <button ion-button type="submit" block color="primary">Actualizar datos</button>
+				        <div class="space"></div>
+				    </form>
+    			</ion-col>
+    		</ion-row>
+    	</ion-grid>
+    </div>
+    <div id="las_pu">
+        <ion-grid no-padding id="grid3">
+            <ion-row no-padding align-items-center>
+                <ion-col col-3 id="pad-5">
+                    <p>Nice job</p>
+                </ion-col>
+                <ion-col class="div_img" col-6>
+                    <p>This is a 468x60 test ad.</p>
+                </ion-col>
+                <ion-col class="div_img" col-3>
+                    <img src="../../assets/imgs/tab2@3x.png" class="img_icon">
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

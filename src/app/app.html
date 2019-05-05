@@ -1,0 +1,58 @@
+ <ion-menu [content]="content">
+  <ion-header id="user_name">
+    <ion-toolbar text-center>
+      <img src="../assets/imgs/avatar9.png" alt="" width="50">
+      <!-- <ion-title>{{userDetails.name}}</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content id="content-menu">
+    <ion-list>
+      <!-- <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button> -->
+        <hr class="hr-white">
+        <ion-item menuClose (click)="calendar()">
+            <img src="../assets/imgs/calendario.png" class="img_menu"> <span class="span_menu">Calendario</span>
+        </ion-item>
+        <ion-item menuClose (click)="personalOb()">
+            <img src="../assets/imgs/objpersonales.png" class="img_menu"> <span class="span_menu">Objetivos personales</span>
+        </ion-item>
+        <ion-item menuClose (click)="sharedOb()">
+            <img src="../assets/imgs/objcompartidos.png" class="img_menu"> <span class="span_menu">Objetivos compartidos</span>
+        </ion-item>
+        <ion-item menuClose (click)="notes()">
+            <img src="../assets/imgs/notas.png" class="img_menu"> <span class="span_menu">Notas</span>
+        </ion-item>
+        <hr class="hr-white-2">
+        <ion-item menuClose (click)="blog()">
+            <img src="../assets/imgs/blog.png" class="img_menu"> <span class="span_menu">Blog</span>
+        </ion-item>
+        <hr class="hr-white-2">
+        <ion-item menuClose (click)="notifications()">
+            <img src="../assets/imgs/notificacion.png" class="img_menu"> <span class="span_menu">Notificaciones</span>
+        </ion-item>
+        <hr class="hr-white-2">
+        <ion-item menuClose (click)="about()">
+            <img src="../assets/imgs/info.png" class="img_menu"> <span class="span_menu">Acerca de</span>
+        </ion-item>
+        <ion-item>
+            <img src="../assets/imgs/ayuda.png" class="img_menu"> <span class="span_menu">Ayuda</span>
+        </ion-item>
+        <hr class="hr-white-2">
+        <ion-item menuClose (click)="privacy()">
+            <img src="../assets/imgs/docto.png" class="img_menu"> <span class="span_menu">Política de privacidad</span>
+        </ion-item>
+        <ion-item menuClose (click)="conditions()">
+            <img src="../assets/imgs/docto.png" class="img_menu"> <span class="span_menu">Términos y condiciones</span>
+        </ion-item>
+        <ion-item>
+            <span menuClose (click)="logout()">Salir</span>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
