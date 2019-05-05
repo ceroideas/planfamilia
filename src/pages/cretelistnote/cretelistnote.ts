@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , Events, LoadingController, AlertController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,13 +15,15 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-cretelistnote',
   templateUrl: 'cretelistnote.html',
+    providers: [AuthServiceProvider]
+
 })
 export class CretelistnotePage {
 	userDetails : any;
 	userListNotes : any;
 	items : any = [];
 	item_name_input:any;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController,public auth: AuthServiceProvider) {
   		var data = JSON.parse(localStorage.getItem('userAuth'));
         var not = JSON.parse(localStorage.getItem('userListNotes'));
         this.userDetails = data;
@@ -47,7 +51,7 @@ export class CretelistnotePage {
     }
 
     addListNote(){
-    	var url = 'http://localhost/plandefamilia/public/addListNotes';
+    	var url = this.auth.url+'/addListNotes';
   		var dat = $('#form_add_list_note').serialize();
   		let loader: any;
     	$.ajax({

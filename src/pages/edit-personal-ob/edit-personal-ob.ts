@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,11 +15,13 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-edit-personal-ob',
   templateUrl: 'edit-personal-ob.html',
+    providers: [AuthServiceProvider]
+
 })
 export class EditPersonalObPage { 
 	public p;
 	public userDetails;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public auth: AuthServiceProvider) {
   		this.p = navParams.get("p");
   		this.userDetails = navParams.get("userDetails");
   	}
@@ -31,7 +35,7 @@ export class EditPersonalObPage {
   	}
 
   	editPersonalOb(){
-  		var url = 'http://localhost/plandefamilia/public/editPersonalOb';
+  		var url = this.auth.url+'/editPersonalOb';
   		var dat = $('#form_edit_p_o').serialize();
   		let loader : any;
   		console.log(dat);
@@ -78,7 +82,7 @@ export class EditPersonalObPage {
   	}
 
   	deletePerOb(){
-  		var url = 'http://localhost/plandefamilia/public/deletePerOb/'+this.p.id;
+  		var url = this.auth.url+'/deletePerOb/'+this.p.id;
   		let loader : any;
   		$.ajax({
 			url: url,

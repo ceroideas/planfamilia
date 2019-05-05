@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,10 +15,12 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-detail-p-ersonal-ob',
   templateUrl: 'detail-p-ersonal-ob.html',
+    providers: [AuthServiceProvider]
+
 })
 export class DetailPErsonalObPage {
 	public p;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public auth: AuthServiceProvider) {
   		this.p = navParams.get("p");
   	}
 
@@ -25,7 +29,7 @@ export class DetailPErsonalObPage {
   	}
 
   	deletePerOb(){
-  		var url = 'http://localhost/plandefamilia/public/deletePerOb/'+this.p.id;
+  		var url = this.auth.url+'/deletePerOb/'+this.p.id;
   		let loader : any;
   		$.ajax({
 			url: url,

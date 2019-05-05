@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 /**
  * Generated class for the MyperfilPage page.
@@ -12,10 +14,12 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-myperfil',
   templateUrl: 'myperfil.html',
+    providers: [AuthServiceProvider]
+
 })
 export class MyperfilPage {
 	userDetails:any;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public auth: AuthServiceProvider) {
   		var data = JSON.parse(localStorage.getItem('userAuth'));
 		if(data){
 	    	this.userDetails = data;
@@ -27,11 +31,10 @@ export class MyperfilPage {
   	}
 
   	editPersonalDates(){
-  		var url = 'http://localhost/plandefamilia/public/editPersoalDates';
   		var dat = $('#f_e_p_d').serialize();
   		let loader: any;
   		$.ajax({
-			url: url,
+			url: this.auth.url+'/editPersoalDates',
 			type: 'POST',
 			data: dat,
 			beforeSend: ()=>{

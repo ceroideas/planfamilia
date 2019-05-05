@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage }       from '../pages/home/home';
-import { ListPage }       from '../pages/list/list';
 import { WelcomePage }    from '../pages/welcome/welcome';
 import { PersonalObPage } from '../pages/personal-ob/personal-ob';
 import { NotesPage } from '../pages/notes/notes';
@@ -17,11 +16,14 @@ import { LoginPage } from '../pages/login/login';
 import { CalendarPage } from '../pages/calendar/calendar';
 import { SharedObPage } from '../pages/shared-ob/shared-ob';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { OneSignal } from '@ionic-native/onesignal';
 
 import * as $ from 'jquery';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [OneSignal, AuthServiceProvider]
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
@@ -32,7 +34,7 @@ export class MyApp {
 
     userDetails : any;
   
-    constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+    constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, private oneSignal: OneSignal, public auth: AuthServiceProvider) {
         this.initializeApp();
 
         var data = JSON.parse(localStorage.getItem('userAuth'));
@@ -41,16 +43,17 @@ export class MyApp {
         }
         this.pages = [
             { title: 'Home', component: HomePage },
-            { title: 'List', component: ListPage },
             { title: 'Personal', component: PersonalObPage }
         ];
   }
 
   initializeApp() { 
     this.platform.ready().then(() => {
+        this.handlerNotifications();
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
+      this.statusBar.show();
       this.splashScreen.hide();
     });
   }
@@ -105,4 +108,43 @@ export class MyApp {
     notifications(){
         this.nav.push(NotificationsPage);
     }
+
+    private handlerNotifications(){
+    if (this.platform.is('cordova')) {
+      this.oneSignal.startInit('1a293554-ae60-4471-9f6b-2b64b56933b0', '852798236448');
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+      this.oneSignal.handleNotificationReceived()
+      .subscribe(()=>{
+      });
+      this.oneSignal.handleNotificationOpened()
+      .subscribe(jsonData => {
+          let data = jsonData.notification.payload.additionalData;
+
+          if (data.type == "activity") {
+          }
+      });
+      this.oneSignal.endInit();
+
+      this.oneSignal.getIds().then((ids)=> {
+      
+          localStorage.setItem('oneSignalIdFamilia',ids.userId);
+          let onesignalId = localStorage.getItem('oneSignalIdFamilia');
+
+          let user = localStorage.getItem('userAuth');
+
+          if (user) {
+              $.ajax({
+                  method: "POST",
+                  url: this.auth.url+'/saveOnesignalId',
+                  data: {user_id:JSON.parse(user).id,onesignal_id:onesignalId},
+              }).done((suc)=>{
+                  console.log(suc);
+              }).fail((err)=>{
+                  console.log(err);
+              })
+          }
+
+      });
+    }
+  }
 }

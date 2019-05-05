@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { HomePage } from '../home/home';
 import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 import * as $ from 'jquery';
 
@@ -18,9 +19,10 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-welcome',
   templateUrl: 'welcome.html',
+  providers: [AuthServiceProvider]
 })
 export class WelcomePage {
-    constructor(public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController , public auth: AuthServiceProvider) {
         var data = JSON.parse(localStorage.getItem('userAuth'));
         var p_o = JSON.parse(localStorage.getItem('userPerOb')); 
         if(data){
@@ -44,11 +46,10 @@ export class WelcomePage {
 	}
 
     logForm(){
-        let apiUrl : any = 'http://localhost/plandefamilia/public/';
         let loader: any;
         var f = $('#form-login').serialize();
           $.ajax({
-            url: apiUrl+'auth',
+            url: this.auth.url+'/auth',
             type: 'POST',
             data:f,
             beforeSend: ()=>{
@@ -84,6 +85,23 @@ export class WelcomePage {
                 }
                 localStorage.setItem('news' , JSON.stringify(data.news));
                 localStorage.setItem('userFamily' , JSON.stringify(data.family));
+                
+                let onesignalId = localStorage.getItem('oneSignalIdFamilia');
+
+                let user = localStorage.getItem('userAuth');
+
+                if (onesignalId) {
+                  $.ajax({
+                      method: "POST",
+                      url: this.auth.url+'/saveOnesignalId',
+                      data: {user_id:JSON.parse(user).id,onesignal_id:onesignalId},
+                  }).done((suc)=>{
+                      console.log(suc);
+                  }).fail((err)=>{
+                      console.log(err);
+                  })
+                }
+
                 loader.dismiss();
                 this.goHome();
             }

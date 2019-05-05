@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 
@@ -14,10 +16,12 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-create-note',
   templateUrl: 'create-note.html',
+    providers: [AuthServiceProvider]
+
 })
 export class CreateNotePage {
 	userDetails: any;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public auth: AuthServiceProvider) {
   		var data = JSON.parse(localStorage.getItem('userAuth'));
 		if(data){
 	    	this.userDetails = data;
@@ -29,7 +33,7 @@ export class CreateNotePage {
   	}
 
   	addTextNote(){
-  		var url = 'http://localhost/plandefamilia/public/addTextNote';
+  		var url = this.auth.url+'/addTextNote'; 
   		var dat = $('#form_add_note').serialize();
   		let loader : any;
   		$.ajax({

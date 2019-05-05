@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,10 +15,12 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-edit-note',
   templateUrl: 'edit-note.html',
+    providers: [AuthServiceProvider]
+
 })
 export class EditNotePage {
 	public n;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public auth: AuthServiceProvider) {
         this.n = navParams.get("n");
   	}
 
@@ -25,7 +29,7 @@ export class EditNotePage {
   	}
 
   	editTextNote(){
-  		var url = 'http://localhost/plandefamilia/public/editTextNote';
+  		var url = this.auth.url+'/editTextNote';
   		var dat = $('#form_edit_note').serialize();
   		console.log(dat);
   		let loader : any;
@@ -74,7 +78,7 @@ export class EditNotePage {
   	}
 
   	deleteTextNote(){
-  		var url = 'http://localhost/plandefamilia/public/deleteTextNote/'+this.n.id;
+  		var url = this.auth.url+'/deleteTextNote/'+this.n.id;
   		let loader : any;
   		$.ajax({
 			url: url,

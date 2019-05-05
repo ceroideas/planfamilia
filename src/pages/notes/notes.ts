@@ -61,26 +61,4 @@ export class NotesPage {
             n:p,
         });
     }
-
-    viewNot(){
-        let load;
-        load = this.loadingCtrl.create({
-            content: "Cargando",
-        });
-        load.present();
-        $('.hidde-list').hide();
-        $('.hidde-text').css('display' , 'block');
-        load.dismiss();
-    }
-
-    viewList(){
-        let load;
-        load = this.loadingCtrl.create({
-            content: "Cargando",
-        });
-        load.present();
-        $('.hidde-text').hide();
-        $('.hidde-list').css('display' , 'block');
-        load.dismiss();
-    }
 }

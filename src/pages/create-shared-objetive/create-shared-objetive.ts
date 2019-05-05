@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , Events, LoadingController, AlertController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 /**
  * Generated class for the CreateSharedObjetivePage page.
@@ -12,13 +14,15 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-create-shared-objetive',
   templateUrl: 'create-shared-objetive.html',
+    providers: [AuthServiceProvider]
+
 })
 export class CreateSharedObjetivePage {
 	userDetails: any;
 	myDate: any;
 	userFamily: any;
 	family_r: any = [];
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController,public auth: AuthServiceProvider) {
   		var data = JSON.parse(localStorage.getItem('userAuth'));
   		var dat = JSON.parse(localStorage.getItem('userFamily'));
   		this.userFamily = dat;
@@ -44,7 +48,7 @@ export class CreateSharedObjetivePage {
   	}
 
   	addSharedOb(){
-  		var url = 'http://localhost/plandefamilia/public/addSharedOb';
+  		var url = this.auth.url+'/addSharedOb';
   		var dat = $('#form_add_s_o').serialize();
   		let loader: any;
   		$.ajax({

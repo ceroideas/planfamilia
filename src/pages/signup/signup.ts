@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { VerifycodePage } from '../verifycode/verifycode';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 
 import * as $ from 'jquery';
 
@@ -16,10 +18,11 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
+    providers: [AuthServiceProvider]
 })
 export class SignupPage {
 
-    constructor(private emailComposer: EmailComposer,public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+    constructor(private emailComposer: EmailComposer,public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController, public auth: AuthServiceProvider) {
   	}
 
   	ionViewDidLoad() {
@@ -27,12 +30,11 @@ export class SignupPage {
   	}
 
   	singUp(){
-  		let apiUrl : any = 'http://localhost/plandefamilia/public/';
         let loader: any;
 
         var f = $('#form-register').serialize();
         $.ajax({
-            url: apiUrl+'registerUser',
+            url: this.auth.url+'/registerUser',
             type: 'POST',
             data:f,
             beforeSend: ()=>{

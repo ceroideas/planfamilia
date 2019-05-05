@@ -1,5 +1,7 @@
 import { Component , ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams , Events, LoadingController, AlertController , Slides} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,6 +15,8 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-create-family',
   templateUrl: 'create-family.html',
+    providers: [AuthServiceProvider]
+
 })
 export class CreateFamilyPage {
 	userDetails: any;
@@ -24,7 +28,7 @@ export class CreateFamilyPage {
   	userFamily:any;
   	@ViewChild(Slides) slides: Slides;
   	avatar_item : any = 'avatar0.png';
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public auth: AuthServiceProvider) {
   		var data = JSON.parse(localStorage.getItem('userAuth'));
   		var fami = JSON.parse(localStorage.getItem('userFamily'));
   		this.userDetails = data;
@@ -46,7 +50,7 @@ export class CreateFamilyPage {
 	    // if the value is an empty string don't filter the items
 	    if (val && val.trim() != '') {
 	      this.items = this.items.filter((item) => {
-	        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+	        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1); 
 	      })
 	    }
 	}
@@ -76,7 +80,7 @@ export class CreateFamilyPage {
 	}
 
 	addFamily(){
-		var url = 'http://localhost/plandefamilia/public/addFamily';
+		var url = this.auth.url+'/addFamily';
   		var dat = $('#form_add_family').serialize();
   		let loader: any;
   		$.ajax({

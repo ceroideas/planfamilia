@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , Events, LoadingController, AlertController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,25 +15,25 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-create-personal-ob',
   templateUrl: 'create-personal-ob.html',
+  providers: [AuthServiceProvider]
 })
 export class CreatePersonalObPage {
 	userDetails: any;
 	myDate: any;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public auth: AuthServiceProvider) {
 		var data = JSON.parse(localStorage.getItem('userAuth'));
 		if(data){
 	    	this.userDetails = data;
 		}
   	}
   	goHome(){
-  		var p_o = JSON.parse(localStorage.getItem('userPerOb'));
   		this.navCtrl.pop();
   	}
-  	ionViewDidLoad() { 
+  	ionViewDidLoad() {  
     	console.log('ionViewDidLoad CreatePersonalObPage');
   	}
   	addPersonalOb(){
-  		var url = 'http://localhost/plandefamilia/public/addPersonalOb';
+  		var url = this.auth.url+'/addPersonalOb';
   		var dat = $('#form_add_p_o').serialize();
   		let loader: any;
   		$.ajax({
@@ -75,16 +77,4 @@ export class CreatePersonalObPage {
 			console.log("complete");
 		});
   	}
-
-    showMenu(){
-        $('.dropdown-content').toggle();
-    }
-
-    myPerfil(){
-        this.navCtrl.push(MyperfilPage);
-    }
-
-    myFamily(){
-        this.navCtrl.push(MyfamilyPage);
-    }
 }

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
 import { NotesPage } from '../notes/notes';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -14,13 +16,15 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-editlistnote',
   templateUrl: 'editlistnote.html',
+    providers: [AuthServiceProvider]
+
 })
 export class EditlistnotePage {
 	userListNotes : any;
 	items : any = [];
 	item_name_input:any;
 	public n;
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public auth: AuthServiceProvider) {
   		this.n = navParams.get("n");
         this.events.subscribe('editarObjeto',(/*parametro*/)=>{
             // this.userPerOb = parametro
@@ -49,7 +53,7 @@ export class EditlistnotePage {
     }
 
     editListNote(){
-    	var url = 'http://localhost/plandefamilia/public/editListNotes';
+    	var url = this.auth.url+'/editListNotes';
   		var dat = $('#form_edit_list_note').serialize();
   		let loader: any;
     	$.ajax({
@@ -93,7 +97,7 @@ export class EditlistnotePage {
     }
 
     deleteNoteN(){
-  		var url = 'http://localhost/plandefamilia/public/deleteListNote/'+this.n.id;
+  		var url = this.auth.url+'/deleteListNote/'+this.n.id;
   		let loader : any;
   		$.ajax({
 			url: url,

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { WelcomePage } from '../welcome/welcome';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 
 import * as $ from 'jquery';
 
@@ -16,10 +18,11 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-verifycode', 
   templateUrl: 'verifycode.html',
+  providers: [AuthServiceProvider]
 })
 export class VerifycodePage {
 	public id;
-    constructor(public actionSheetCtrl: ActionSheetController,private emailComposer: EmailComposer,public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController) {
+    constructor(public actionSheetCtrl: ActionSheetController,private emailComposer: EmailComposer,public navCtrl: NavController, public navParams: NavParams , public loadingCtrl: LoadingController,public alertCtrl: AlertController,public auth: AuthServiceProvider) {
   		this.id   = navParams.get("id");
   	}
 
@@ -28,12 +31,11 @@ export class VerifycodePage {
   	}
 
   	activate(){
-  		let apiUrl : any = 'http://localhost/plandefamilia/public/';
         let loader: any;
         var f = $('#form-activate').serialize();
         console.log(f);
         $.ajax({
-            url: apiUrl+'activateUser',
+            url: this.auth.url+'/activateUser',
             type: 'POST',
             data:f,
             beforeSend: ()=>{
@@ -99,10 +101,9 @@ export class VerifycodePage {
     }
 
     resendCode(){
-        let apiUrl : any = 'http://localhost/plandefamilia/public/resendCode/'+this.id;
         let loader: any;
         $.ajax({
-            url: apiUrl,
+            url: this.auth.url+'/'+this.id,
             type: 'GET',
             data:{},
             beforeSend: ()=>{

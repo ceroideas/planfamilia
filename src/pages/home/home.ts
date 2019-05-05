@@ -65,7 +65,9 @@ export class HomePage {
     }
 
     logout(){
+        let aux = localStorage.getItem('oneSignalIdFamilia');
         localStorage.clear();
+        localStorage.setItem('oneSignalIdFamilia',aux);
         setTimeout(()=>this.navCtrl.setRoot(WelcomePage), 500);
     }
 

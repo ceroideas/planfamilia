@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 
@@ -14,12 +16,14 @@ import * as $ from 'jquery';
 @Component({
   selector: 'page-edit-shared-objetive',
   templateUrl: 'edit-shared-objetive.html',
+    providers: [AuthServiceProvider]
+
 })
 export class EditSharedObjetivePage {
 	public s;
 	userFamily : any;
 	family_r : any = [];
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController, public auth: AuthServiceProvider) {
   		this.s = navParams.get("s");
   		var dat = JSON.parse(localStorage.getItem('userFamily'));
   		this.userFamily = dat;
@@ -56,7 +60,7 @@ export class EditSharedObjetivePage {
   	}
 
   	editSharedOb(){
-  		var url = 'http://localhost/plandefamilia/public/editSharedOb';
+  		var url = this.auth.url+'/editSharedOb';
   		var dat = $('#form_edit_s_o').serialize(); 
   		let loader : any;
   		console.log(dat);
@@ -103,7 +107,7 @@ export class EditSharedObjetivePage {
   	}
 
     deleteShaOb(){
-        var url = 'http://localhost/plandefamilia/public/deleteShaOb/'+this.s.id;
+        var url = this.auth.url+'/deleteShaOb/'+this.s.id;
         let loader : any;
         $.ajax({
             url: url,

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import * as $ from 'jquery';
 
 /**
@@ -13,12 +15,14 @@ import * as $ from 'jquery';
 @Component({ 
   selector: 'page-detail-shared-objetive',
   templateUrl: 'detail-shared-objetive.html',
+    providers: [AuthServiceProvider]
+
 })
 export class DetailSharedObjetivePage {
 	public s;
 	userFamily : any;
 	family_r : any = [];
-  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public auth: AuthServiceProvider) {
   		this.s = navParams.get("s");
   		var dat = JSON.parse(localStorage.getItem('userFamily'));
   		this.userFamily = dat;
@@ -38,7 +42,7 @@ export class DetailSharedObjetivePage {
   	}
 
   	deleteShaOb(){
-        var url = 'http://localhost/plandefamilia/public/deleteShaOb/'+this.s.id;
+        var url = this.auth.url+'/'+this.s.id;
         let loader : any;
         $.ajax({
             url: url,
