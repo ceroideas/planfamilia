@@ -9,7 +9,8 @@
 // @Injectable()
 export class AuthServiceProvider {
 
-  url = 'https://kodeworking.com/plandefamilia/public';
+  url = 'http://localhost/plandefamilia/public';
+  // url = 'https://kodeworking.com/plandefamilia/public';
 
   // constructor(public http: HttpClient) {
   //   console.log('Hello AuthServiceProvider Provider');

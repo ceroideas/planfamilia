@@ -41,6 +41,7 @@ import { CreateSharedObjetivePageModule }    from '../pages/create-shared-objeti
 import { EditSharedObjetivePageModule }    from '../pages/edit-shared-objetive/edit-shared-objetive.module';
 import { DetailSharedObjetivePageModule }    from '../pages/detail-shared-objetive/detail-shared-objetive.module';
 import { CreateActivityPageModule }    from '../pages/create-activity/create-activity.module';
+import { ViewActivitiesPageModule }    from '../pages/view-activities/view-activities.module';
 
 
 @NgModule({
@@ -68,7 +69,7 @@ import { CreateActivityPageModule }    from '../pages/create-activity/create-act
     PrivacyPageModule,
     VerifycodePageModule,CalendarPageModule,SharedObPageModule,NotificationsPageModule,MyperfilPageModule,MyfamilyPageModule,
     CretelistnotePageModule,EditlistnotePageModule,CreateFamilyPageModule,CreateSharedObjetivePageModule,EditSharedObjetivePageModule,
-    DetailSharedObjetivePageModule,CreateActivityPageModule
+    DetailSharedObjetivePageModule,CreateActivityPageModule,ViewActivitiesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

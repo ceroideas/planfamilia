@@ -5,7 +5,7 @@ page-create-activity {
 
 	.item-md {
 	    background-color: transparent;
-	    color: white;
+	    color: black;
 	    font-size: 14px;
 	    min-height: 2px;
 	    height: auto; 
@@ -35,5 +35,27 @@ page-create-activity {
 
 	.label_form_full{
 		width: 100%
+	}
+
+	.item_fam{
+		background: #999;
+    	border-radius: 5px;
+    	margin-bottom: 10px;
+	}
+
+	.list_family{
+		height: auto;
+		background-color: white;
+		border: solid 1px #999;
+		border-radius: 5px;
+	}
+
+	.on-list-header{
+		margin-top: 0px;
+		border: none !important;
+	}
+
+	.item-radio-checked{
+		background-color: #999;
 	}
 }

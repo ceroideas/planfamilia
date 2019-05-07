@@ -48,7 +48,7 @@
             <ion-row no-padding align-items-center>
             	<ion-col col-1></ion-col>
 				<ion-col col-10 text-center>
-					<form (ngSubmit)="addPersonalOb()" id="form_add_p_o">
+					<form (ngSubmit)="addActivity()" id="form_add_ac">
 				        <div class="space"></div>
 				      	<ion-item class="item_form">
 				        	<ion-label class="label_form">
@@ -62,14 +62,37 @@
 						</ion-item>
 				        <div class="space"></div>
 				      	<ion-item class="item_form">
-						  	<ion-label position="floating">Fecha limite</ion-label>
+						  	<ion-label position="floating">Fecha de la actividad</ion-label>
 						  	<ion-datetime name="limit" displayFormat="DD MMMM YYYY" min="2019" max="2100" doneText="Aceptar" cancelText="Cancelar" monthNames="Enero,Febrero,Marzo,Abril,Mayo,Junio,Julio,Agosto,Septiembre,Octubre,Noviembre,Diciembre" [(ngModel)]="myDate"></ion-datetime>
 						</ion-item>
 				        <div class="space"></div>
 						<ion-item class="item_form">
-						  	<ion-label position="floating">Hora limite</ion-label>
+						  	<ion-label position="floating">Hora de la actividad</ion-label>
 						  	<ion-datetime displayFormat="HH:mm" doneText="Aceptar" cancelText="Cancelar" name="limit_h" [(ngModel)]="myHour"></ion-datetime>
 						</ion-item>
+                        <div text-left>
+                            <h4>Compartir con:</h4>
+                            <ion-item class="item_fam" *ngFor="let f of userFamily">
+                                <ion-label>{{ f.name }} ({{ f.nick }})</ion-label>
+                                <ion-checkbox checked="false" [(ngModel)]="f.status" (ionChange)="updateCucumber(f)" name="fami"></ion-checkbox>
+                            </ion-item>
+                        </div>
+                        <ion-list radio-group class="list_family" [(ngModel)]="responsable" name="responsable">
+                            <div class="space"></div>
+                            <ion-list-header class="on-list-header">
+                                ¿Quién es responsable de la actividad?
+                            </ion-list-header>
+                            <ion-item>
+                                <ion-label>Yo</ion-label>
+                                <ion-radio value="{{ userDetails.id }}"></ion-radio>
+                            </ion-item>
+                            <ion-item *ngFor="let f of userFamily">
+                                <ion-label>{{ f.name }}</ion-label>
+                                <ion-radio value="{{ f.id }}"></ion-radio>
+                            </ion-item>
+                        </ion-list>
+                        <ion-input type="hidden" name="responsable_id" value="{{ responsable }}"></ion-input>
+                        <ion-input type="hidden" name="family_r" value="{{ family_r }}"></ion-input>
 						<ion-input type="hidden" name="limit_date" value="{{ myDate }}"></ion-input>
 						<ion-input type="hidden" name="limit_hour" value="{{ myHour }}"></ion-input>
 						<ion-input type="hidden" name="user_id" value="{{ userDetails.id }}"></ion-input>
