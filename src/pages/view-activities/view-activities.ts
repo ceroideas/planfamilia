@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, LoadingController, AlertController, ActionSheetController} from 'ionic-angular';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { EditActivityPage } from '../edit-activity/edit-activity';
+import { DetailActivityPage } from '../detail-activity/detail-activity';
+
+import * as $ from 'jquery';
 
 /**
  * Generated class for the ViewActivitiesPage page.
@@ -12,12 +17,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-view-activities',
   templateUrl: 'view-activities.html',
+      providers: [AuthServiceProvider]
+
 })
 export class ViewActivitiesPage {
 	public act;
 	public day;
 	date : any;
-  	constructor(public navCtrl: NavController, public navParams: NavParams) {
+  	constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events, public loadingCtrl: LoadingController,public alertCtrl: AlertController, public actionSheetCtrl: ActionSheetController,public auth: AuthServiceProvider) {
   		this.act = JSON.parse(navParams.get('act'));
   		this.day = navParams.get('day');
   		var d = new Date(this.day);
@@ -27,5 +34,83 @@ export class ViewActivitiesPage {
   	ionViewDidLoad() {
     	console.log('ionViewDidLoad ViewActivitiesPage');
   	}
+  	
+  	editAct(p){
+  		this.navCtrl.push(EditActivityPage , {
+  			a:p
+  		})
+  	}
 
+  	viewAct(p){
+  		this.navCtrl.push(DetailActivityPage , {
+              a:p
+        });
+  	}
+
+  	deleteActivity(id){
+        var url = this.auth.url+'/deleteActivity/'+id;
+        let loader : any;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {},
+            beforeSend: ()=>{
+                loader = this.loadingCtrl.create({
+                  content: "Eliminando",
+                });
+                loader.present();
+            }
+        })
+        .done((data)=> {
+            console.log(data);
+
+            if (data.success != true) {
+                loader.dismiss();
+                this.alertCtrl.create({
+                  title: 'Error!',
+                  subTitle: data.msj,
+                  buttons: ['OK']
+                }).present();
+            }else{
+                localStorage.removeItem("userActivity");
+                localStorage.setItem('userActivity' , JSON.stringify(data.act));
+                this.events.publish('editarObjeto');
+                loader.dismiss();
+                this.alertCtrl.create({
+                  title: 'Exito!',
+                  subTitle: 'Actividad eliminada exitosamente',
+                  buttons: ['OK']
+                }).present();
+                this.navCtrl.pop();
+            }
+        })
+        .fail((r)=> {
+            alert(r)
+        })
+        .always(()=> {
+            console.log("complete");
+        });
+    }
+
+  	deleteAct(p){
+        this.actionSheetCtrl.create({
+            title: 'Seguro de eliminar esta actividad?',
+            buttons: [
+                {
+                    text: 'Confirmar',
+                    role: 'destructive',
+                    handler: () => {
+                        this.deleteActivity(p.id);
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                    handler: () => {
+                        console.log('Cancelado');
+                    }
+                }
+            ]
+        }).present();
+    }
 }

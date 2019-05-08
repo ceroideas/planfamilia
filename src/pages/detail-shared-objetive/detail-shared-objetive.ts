@@ -42,7 +42,7 @@ export class DetailSharedObjetivePage {
   	}
 
   	deleteShaOb(){
-        var url = this.auth.url+'/'+this.s.id;
+        var url = this.auth.url+'/deleteShaOb/'+this.s.id;
         let loader : any;
         $.ajax({
             url: url,
@@ -106,5 +106,5 @@ export class DetailSharedObjetivePage {
                 }
             ]
         }).present();
-    }
+    } 
 }

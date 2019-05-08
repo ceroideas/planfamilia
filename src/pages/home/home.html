@@ -69,11 +69,26 @@
         <ion-grid padding-left padding-right>
             <ion-row padding-left padding-right align-items-center>
                 <ion-col col-12 padding-left id="div-list-activities">
-                    <p class="no_re">Sin actividades</p>
+                    <div id="div_ob">
+                        <ion-row align-items-center *ngFor="let p of userActivity" class="row_ob">
+                            <ion-col col-2>
+                                <img src="../../assets/imgs/bulletverde.png" alt="" width="100%">
+                            </ion-col>
+                            <ion-col col-10 (click)="viewAct(p)">
+                                <p class="p_ob">
+                                    <b>{{ p.name }}</b>
+                                </p>
+                                <p class="p_ob">
+                                    <b>{{ p.limit_date }} {{ p.limit_hour }}</b>
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                        <p class="no_re" *ngIf="userActivity.length < 1">Sin Datos</p>
+                    </div>
                 </ion-col>
             </ion-row>
             <ion-row padding-left padding-right align-items-center>
-                <button ion-button full color="secondary" id="but_add">Agregar actividad</button>
+                <button ion-button full color="secondary" id="but_add" (click)="addAct()">Agregar actividad</button>
             </ion-row>
         </ion-grid>
         <ion-grid>

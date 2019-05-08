@@ -11,6 +11,8 @@ import { EditPersonalObPage }    from '../edit-personal-ob/edit-personal-ob';
 import { EditSharedObjetivePage }    from '../edit-shared-objetive/edit-shared-objetive';
 import { MyperfilPage }    from '../myperfil/myperfil';
 import { MyfamilyPage }    from '../myfamily/myfamily';
+import { DetailActivityPage } from '../detail-activity/detail-activity';
+import { CreateActivityPage }    from '../create-activity/create-activity';
 
 import * as $ from 'jquery';
 
@@ -24,19 +26,23 @@ export class HomePage {
     public userDetails;
     public userPerOb;
     userShaOb:any;
+    userActivity;
     constructor(public navCtrl: NavController,public navParams: NavParams, public events: Events) {
         var data = JSON.parse(localStorage.getItem('userAuth'));
         var obs = JSON.parse(localStorage.getItem('userPerOb'));
         var sha = JSON.parse(localStorage.getItem('userShaOb'));
+        var act = JSON.parse(localStorage.getItem('userActivity'));
         this.userDetails = data;
         this.userShaOb = sha;
         this.userPerOb = obs;
+        this.userActivity = act;
         // this.userPerOb = navParams.get("userPerOb");
 
         this.events.subscribe('editarObjeto',()=>{
             // this.userPerOb = parametro
-            this.userPerOb = JSON.parse(localStorage.getItem('userPerOb'));
-            this.userShaOb = JSON.parse(localStorage.getItem('userShaOb'));
+            this.userPerOb    = JSON.parse(localStorage.getItem('userPerOb'));
+            this.userShaOb    = JSON.parse(localStorage.getItem('userShaOb'));
+            this.userActivity = JSON.parse(localStorage.getItem('userActivity'));
         })
       }
     personalOb(){
@@ -93,5 +99,15 @@ export class HomePage {
         this.navCtrl.push(DetailSharedObjetivePage , {
             s:p
         })
+    }
+
+    viewAct(p){
+        this.navCtrl.push(DetailActivityPage , {
+            a:p
+        })
+    }
+
+    addAct(){
+        this.navCtrl.push(CreateActivityPage);
     }
 }

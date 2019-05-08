@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , Events, LoadingController, AlertController} from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { HomePage } from '../home/home';
 
 import * as $ from 'jquery';
 
@@ -49,10 +50,10 @@ export class CreateActivityPage {
     }
 
     addActivity(){
-          var url = this.auth.url+'/addActivity';
-          var dat = $('#form_add_ac').serialize();
-          let loader: any;
-          $.ajax({
+        var url = this.auth.url+'/addActivity';
+        var dat = $('#form_add_ac').serialize();
+        let loader: any;
+        $.ajax({
             url: url,
             type: 'POST',
             data: dat,
@@ -83,7 +84,7 @@ export class CreateActivityPage {
                   subTitle: 'Actividad registrada exitosamente',
                   buttons: ['OK']
                 }).present();
-                this.navCtrl.pop();
+                this.navCtrl.setRoot(HomePage);
             }
         })
         .fail(function(r) {

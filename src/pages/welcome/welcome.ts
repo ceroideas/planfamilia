@@ -85,6 +85,7 @@ export class WelcomePage {
                 }
                 localStorage.setItem('news' , JSON.stringify(data.news));
                 localStorage.setItem('userFamily' , JSON.stringify(data.family));
+                localStorage.setItem('userActivity' , JSON.stringify(data.act));
                 
                 let onesignalId = localStorage.getItem('oneSignalIdFamilia');
 

@@ -45,19 +45,38 @@
         </ion-row>
     </ion-grid>
     <ion-grid no-padding>
-        <ion-row no-padding padding-top align-items-center>
-            <ion-col col-12 text-center *ngIf="act.length < 1">
-                <h5>
+        <ion-row no-padding align-items-center>
+            <ion-col col-12 text-center>
+                <h5 *ngIf="act.length < 1">
                 	Sin actividades para el dia {{ date }}
                 </h5>
-            </ion-col>
-            <ion-col col-12 text-center *ngFor="let a of act">
-                <h5>
-                	{{ a.name }}
+                <h5 *ngIf="act.length > 0">
+                	Actividades para el dia {{ date }}
                 </h5>
             </ion-col>
         </ion-row>
     </ion-grid>
+    <ion-grid no-padding *ngFor="let p of act" class="grid_bojetives">
+            <ion-row padding-left padding-right align-items-center> 
+                <ion-col col-12 text-left>
+                    <h6 class="title_ob">
+                        {{ p.name }}
+                    </h6>
+                    <small>{{ p.description }}</small>
+                </ion-col>
+                <ion-col col-3 text-left>
+                	<button ion-button full color="primary" (click)="editAct(p)" class="button_act">Editar</button>
+                </ion-col>
+                <ion-col col-1 text-left></ion-col>
+                <ion-col col-3 text-left>
+                	<button ion-button full color="secondary" (click)="viewAct(p)" class="button_act">Ver</button>
+                </ion-col>
+                <ion-col col-1 text-left></ion-col>
+                <ion-col col-3 text-left>
+                	<button ion-button full (click)="deleteAct(p)" class="button_act b_3">Eliminar</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     <!-- <div id="las_pu">
         <ion-grid no-padding id="grid3">
             <ion-row no-padding align-items-center>
